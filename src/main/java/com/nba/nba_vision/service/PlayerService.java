@@ -3,7 +3,7 @@ package com.nba.nba_vision.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.nba.nba_vision.datasource.PlayerRepository;
 import com.nba.nba_vision.model.Player;
-import org.springframework.context.annotation.Bean;
+
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +14,7 @@ import org.springframework.http.HttpHeaders;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 // calls API
 // FETCH players, FETCH stats, save everything
@@ -23,7 +24,7 @@ public class PlayerService {
     private final PlayerRepository playerRepository;
 
     private static final String API_KEY = "f1cf141da2msh23c938fa8aaf25bp19b1ecjsn5fb591632aad";
-    private static final String API_HOST = "api-nba-v1.p.rapidapi.com";
+    private static final String API_HOST = "nba-api-free-data.p.rapidapi.com";
 
     public PlayerService(RestTemplate restTemplate, PlayerRepository playerRepository) {
         this.restTemplate = restTemplate;
@@ -67,7 +68,7 @@ public class PlayerService {
 
         ResponseEntity<JsonNode> response = restTemplate.exchange(teamsUrl, HttpMethod.GET, entity, JsonNode.class);
 
-        JsonNode teamsData = response.getBody().get("response");
+        JsonNode teamsData = Objects.requireNonNull(response.getBody()).get("response");
 
         List<Integer> teamIds = new ArrayList<>();
 
@@ -95,13 +96,13 @@ public class PlayerService {
 
         try {
             ResponseEntity<JsonNode> response = restTemplate.exchange(playersUrl, HttpMethod.GET, entity, JsonNode.class);
-            JsonNode playersData = response.getBody().get("response");
+            JsonNode playersData = Objects.requireNonNull(response.getBody()).get("response");
 
             System.out.println("🔍 Team ID: " + teamId + " - Response size: " + (playersData != null ? playersData.size() : "null"));
 
             List<Player> players = new ArrayList<>();
 
-            if (playersData == null || playersData.size() == 0) {
+            if (playersData == null || playersData.isEmpty()) {
                 System.out.println("⚠️ No players found for team ID: " + teamId);
                 return players;
             }

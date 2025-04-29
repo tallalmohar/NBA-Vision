@@ -18,12 +18,32 @@ public class Player {
     private Long id;
 
     private String name;
+
     private String team;
+
     private String position;
 
     private Double pointsPerGame;
     private Double fieldGoalAttempts;
     private Double fieldGoalPercentage;
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public String getTeam() { return team; }
+    public void setTeam(String team) { this.team = team; }
+
+    public String getPosition() { return position; }
+    public void setPosition(String position) { this.position = position; }
+
+    public double getPointsPerGame() { return pointsPerGame; }
+    public void setPointsPerGame(double pointsPerGame) { this.pointsPerGame = pointsPerGame; }
+
+    public double getFieldGoalAttempts() { return fieldGoalAttempts; }
+    public void setFieldGoalAttempts(double fieldGoalAttempts) { this.fieldGoalAttempts = fieldGoalAttempts; }
+
+    public double getFieldGoalPercentage() { return fieldGoalPercentage; }
+    public void setFieldGoalPercentage(double fieldGoalPercentage) { this.fieldGoalPercentage = fieldGoalPercentage; }
 
     /*
         private Double reboundsPerGame;
