@@ -15,7 +15,7 @@ public class NbaVisionApplication {
 	@Bean
 	CommandLineRunner run(PlayerService playerService) {
 		return args -> {
-			playerService.fetchAndSavePlayers();
+			playerService.fetchAndSaveAllPlayersAndStats();
 		};
 	}
 }

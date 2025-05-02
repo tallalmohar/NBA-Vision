@@ -45,11 +45,27 @@ public class Player {
     public double getFieldGoalPercentage() { return fieldGoalPercentage; }
     public void setFieldGoalPercentage(double fieldGoalPercentage) { this.fieldGoalPercentage = fieldGoalPercentage; }
 
-    /*
-        private Double reboundsPerGame;
-        private Double stealsPerGame;
-        private Double blocksPerGame;
-        private Integer plusMinus;
-    */
+
+    private String minutes;
+    private double points;
+    private int assists;
+    private int reboundsTotal;
+    private int steals;
+    private int blocks;
+    private int turnovers;
+    private int personalFouls;
+    private int plusMinus;
+
+    private double fgm;
+    private double fga;
+    private double fgp;
+
+    private double ftm;
+    private double fta;
+    private double ftp;
+
+    private double tpm;
+    private double tpa;
+    private double tpp;
 
 }
