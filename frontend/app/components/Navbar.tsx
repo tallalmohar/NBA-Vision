@@ -10,21 +10,21 @@ export default function Navbar() {
 
     //used to identify which tab is open and change its color
     const isActive = (path: string) =>
-        pathName === path ? 'bg-yellow-500' : 'bg-white hover:bg-gray-200';
+        pathName === path ? 'bg-yellow-500 hover:bg-yellow-500'  : 'bg-white';
 
     return (
         <>
             <nav className="bg-gradient-to-b from-red-700 via-red-700 to-pink-500 w-full h-10 px-6 py-4 shadow"></nav>
-            <nav className="bg-white w-full h-[200px] px-6 py-4 pd-0 shadow flex justify-center content-end">
-                <div className="flex ">
-                    <Image src="/nba-6.svg" alt={"logo"} width={"90"} height={"90"}/>
+            <nav className="bg-white w-full h-[200px] px-6 py-4 pd-0 shadow flex">
+                <div className="ml-[17.55%] flex-shrink-0 hidden md:block">
+                    <Image  className={"hidden md:block"} src="/nba-6.svg" alt={"logo"} width={"90"} height={"90"}/>
                 </div>
                 <div className="flex-box mt-5 mr-100 h-25 self-start items-center">
                     <h1 className={"text-8xl font-bold font-title text-blue-700"}>Fantasy</h1>
                     <p className={"font-bold ml-[5px]"}>NBA VISION</p>
                 </div>
-                <div className="pb-0  items-end z-10">
-                <Image className={"overflow-visible"}  src="/goats.png" alt={"logo"} width={"400"} height={"400"}/>
+                <div className="pb-0  items-end z-10 flex-shrink-0 hidden md:block">
+                <Image className={"overflow-visible hidden md:block"}  src="/goats.png" alt={"logo"} width={"400"} height={"400"}/>
                 </div>
             </nav>
             <nav className={"bg-blue-900  w-full h-10 px-6 py-4 pb-0 shadow flex items-end relative z-0 "}>
