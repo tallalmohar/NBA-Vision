@@ -90,6 +90,68 @@ export default function Page() {
                     },
                 ]}
             />
+            <DropDown
+                title="Grading"
+                sections={[
+                    {
+                        heading: "Team Grading ",
+                        content: (
+                            <>
+                                <p>
+                                    After submitting your roster, your fantasy team will be automatically evaluated and assigned a grade based on several core performance metrics. These metrics are designed to reward balanced, high-upside lineups that align with real-world NBA performance and fantasy value.
+                                </p>
+
+                            </>
+                        ),
+                    },
+                    {
+                        heading: "How your Grade is Calculated",
+                        content: (
+                            <>
+                                <ul className="list-disc pl-6 space-y-2 text-gray-700">
+                                    <li>
+                                        <span className="font-semibold text-black">Positional Balance:</span> Teams should include a healthy mix of backcourt and frontcourt players. Heavily skewed rosters will be penalized.
+                                    </li>
+                                    <li>
+                                        <span className="font-semibold text-black">Statistical Strength: </span> Individual players are scored on core fantasy stats (e.g., points, assists, rebounds, steals, blocks, efficiency).
+                                    </li>
+                                    <li>
+                                        <span className="font-semibold text-black">Team Synergy:</span> Rosters with overlapping strengths and minimized weaknesses are rewarded.
+                                    </li>
+                                    <li>
+                                        <span className="font-semibold text-black">Salary Efficiency:</span> Rosters that maximize player performance per salary unit gain bonus points.
+
+                                    </li>
+                                </ul>
+                                <p className={"mt-5"}>Each category contributes a portion to your final score, which is then converted into a letter grade (e.g., A+, B-, C).</p>
+                            </>
+                        ),
+                    },
+                ]}
+            />
+            <DropDown
+                title="Grading Penalties"
+                sections={[
+                    {
+                        heading: "What can bring down your Grade",
+                        content: (
+                            <>
+                                <ul className="list-disc pl-6 mt-2">
+                                    <li>Teams missing required positional depth may be capped at a maximum grade of C.</li>
+                                    <li>Overloaded single-team rosters may receive synergy deductions to prevent stacking.</li>
+                                    <li>Late submissions or last-minute changes may not be factored in depending on timing.</li>
+                                </ul>
+                            </>
+                        ),
+                    },
+                    {
+                        heading: "",
+                        content: (
+                            <></>
+                        ),
+                    },
+                ]}
+            />
         </main>
     );
 }
