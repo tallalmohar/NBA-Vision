@@ -1,6 +1,6 @@
 "use client";
 import {ReactNode, useState} from "react";
-
+import Image from 'next/image';
 
 type DropDownSection = {
     heading: string;
@@ -15,12 +15,14 @@ type DropDownProps = {
 export default function DropDown({ title, sections }: DropDownProps) {
     const [open, setOpen] = useState(false);
 
+    // @ts-ignore
     return (
         <div className="w-[970px] ">
             <div
                 onClick={() => setOpen(!open)}
-                className={`cursor-pointer p-4  border-1 border-yellow-500 rounded-t shadow transition ${open ? 'bg-yellow-500' : 'bg-white'}`}
+                className={` flex cursor-pointer p-4  border-1 border-yellow-500 rounded-t shadow transition ${open ? 'bg-yellow-500' : 'bg-white'}`}
             >
+                <Image width={"25"} height={"20"} src={open ? "/arrow-up.png" : "/arrow-down.png"} className={'mr-2'} alt={""}/>
                 <h3 className="font-bold">{title}</h3>
             </div>
             {/* Collapsed content below */}
