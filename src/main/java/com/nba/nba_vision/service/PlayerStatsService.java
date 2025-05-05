@@ -66,6 +66,9 @@ public class PlayerStatsService {
                     playerStats.setTeam(latestStats.get("team").asText());
                     playerStats.setName(name);
 
+
+
+
                     playerStatsRepository.save(playerStats);
                 }
             }

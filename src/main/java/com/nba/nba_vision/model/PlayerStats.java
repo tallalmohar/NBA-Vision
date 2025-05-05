@@ -71,4 +71,6 @@ public class PlayerStats {
     public int getTotalTurnovers() { return totalTurnovers; }
 
     public void setTotalTurnovers(int totalTurnovers) { this.totalTurnovers = totalTurnovers; }
+
+
 }

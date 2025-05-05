@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model player_stats {
+  id              BigInt  @id @default(autoincrement())
+  name            String? @db.VarChar(255)
+  player_id       String? @db.VarChar(255)
+  age             String? @db.VarChar(255)
+  team            String? @db.VarChar(255)
+  position        String? @db.VarChar(255)
+  total_points    Int?
+  total_rebounds  Int?
+  total_assists   Int?
+  total_steals    Int?
+  total_blocks    Int?
+  total_turnovers Int?
+  headshot_url    String? @db.VarChar(255)
+}
