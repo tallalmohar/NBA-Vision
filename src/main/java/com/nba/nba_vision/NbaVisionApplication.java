@@ -1,10 +1,9 @@
 package com.nba.nba_vision;
 
-import com.nba.nba_vision.service.PlayerService;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 public class NbaVisionApplication {
@@ -13,9 +12,7 @@ public class NbaVisionApplication {
 		SpringApplication.run(NbaVisionApplication.class, args);
 	}
 	@Bean
-	CommandLineRunner run(PlayerService playerService) {
-		return args -> {
-			playerService.fetchAndSaveAllPlayersAndStats();
-		};
+	public RestTemplate restTemplate() {
+		return new RestTemplate();
 	}
 }
