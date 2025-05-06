@@ -7,15 +7,47 @@ export async function GET(req: NextRequest) {
         const pageSize = page === 1 ? 35 : 25;
         const skip = page === 1 ? 0 : 35 + (page - 2) * 25;
 
-        const players = await prisma.player.findMany({
+        const players = await prisma.player_stats.findMany({
             skip,
             take: pageSize,
             orderBy: { name: 'asc' },
+            select: {
+                id: true,
+                name: true,
+                age: true,
+                team: true,
+                position: true,
+                total_points: true,
+                total_rebounds: true,
+                total_assists: true,
+                total_steals: true,
+                total_blocks: true,
+                total_turnovers: true,
+                headshot_url: true,
+            },
         });
 
-        return NextResponse.json(players);
-    } catch (err) {
-        console.error('API error:', err);
-        return NextResponse.json({ error: 'Something went wrong' }, { status: 500 });
+        const round = (value: number) => Math.round((value / 82) * 10) / 10;
+
+        const safePlayers = players.map(player => ({
+            id: Number(player.id),
+            name: player.name,
+            age: Number(player.age),
+            team: player.team,
+            position: player.position,
+            headshot_url: player.headshot_url,
+
+            total_points: round(Number(player.total_points)),
+            total_rebounds: round(Number(player.total_rebounds)),
+            total_assists: round(Number(player.total_assists)),
+            total_steals: round(Number(player.total_steals)),
+            total_blocks: round(Number(player.total_blocks)),
+            total_turnovers: round(Number(player.total_turnovers)),
+        }));
+
+        return NextResponse.json(safePlayers);
+    } catch (error) {
+        console.error('API error:', error);
+        return NextResponse.json({ error: 'Failed to load player data' }, { status: 500 });
     }
 }
