@@ -37,7 +37,13 @@ export default function PlayerTable() {
             <h1 className="text-3xl font-bold mb-4">Player Stats</h1>
 
             <div className="flex mb-4 gap-2">
+                <form onSubmit={e => {
+                    e.preventDefault();
+                    setQuery(search);
+                    setPage(1);
+                }}>
                 <input
+                    id="searchText"
                     type="text"
                     placeholder="Search by name..."
                     value={search}
@@ -49,10 +55,12 @@ export default function PlayerTable() {
                         setQuery(search);
                         setPage(1); // reset to page 1 when searching
                     }}
-                    className="px-4 py-2 bg-blue-600 text-white rounded"
+                    className="px-4 py-2 ml-1 bg-blue-600 text-white rounded"
+                    id="searchBtn"
                 >
                     Search
                 </button>
+                </form>
             </div>
 
             <table className="w-full text-sm border-collapse">
