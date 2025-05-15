@@ -23,7 +23,7 @@ export default function PlayerTable() {
     const [query, setQuery] = useState('');
     const [selectedPlayers, setSelectedPlayers] = useState<Player[]>([]);
 
-    const handleSelect = (player:any) => {
+    const handleSelect = (player: Player) => {
         setSelectedPlayers((prev) => {
             const alreadySelected = prev.find(p => p.id === player.id);
             if (alreadySelected) {
@@ -36,12 +36,56 @@ export default function PlayerTable() {
             }
         });
     };
-    const isSelected = (id:any) => {
-        selectedPlayers.some(p => p.id === id)
 
+    const isSelected = (id: number) => selectedPlayers.some(p => p.id === id);
+
+    const getPlayerScore = (player: Player): number => {
+        const weights = {
+            pts: 0.25,
+            ast: 0.15,
+            reb: 0.15,
+            stl: 0.10,
+            blk: 0.10,
+            tov: -0.10,
+        };
+
+        const games = 82; // Assume full season
+
+        const pts = player.total_points;
+        const ast = player.total_assists;
+        const reb = player.total_rebounds;
+        const stl = player.total_steals ;
+        const blk = player.total_blocks ;
+        const tov = player.total_turnovers ;
+
+        // Normalize and clamp individual values
+        const score =
+            (pts / 22) * weights.pts +
+            (ast / 5) * weights.ast +
+            (reb / 8) * weights.reb +
+            (stl / 2) * weights.stl +
+            (blk / 3) * weights.blk +
+            (1 - Math.min(tov / 5, 1)) * weights.tov;
+
+        return Math.max(0, Math.min(1, score));
     };
 
-    //the function that does the math
+    const getTeamScore = (): number => {
+        if (selectedPlayers.length === 0) return 0;
+        const total = selectedPlayers.reduce((sum, p) => sum + getPlayerScore(p), 0);
+        return total / selectedPlayers.length;
+    };
+
+    const getTeamGrade = (score: number): string => {
+        if (score >= 0.85) return 'A';
+        if (score >= 0.70) return 'B';
+        if (score >= 0.55) return 'C';
+        if (score >= 0.40) return 'D';
+        return 'F';
+    };
+
+    const teamScore = getTeamScore();
+    const teamGrade = getTeamGrade(teamScore);
 
     useEffect(() => {
         const url = query
@@ -63,31 +107,38 @@ export default function PlayerTable() {
                     setQuery(search);
                     setPage(1);
                 }}>
-                <input
-                    id="searchText"
-                    type="text"
-                    placeholder="Search by name..."
-                    value={search}
-                    onChange={e => setSearch(e.target.value)}
-                    className="border rounded p-2 w-64"
-                />
-                <button
-                    onClick={() => {
-                        setQuery(search);
-                        setPage(1); // reset to page 1 when searching
-                    }}
-                    className="px-4 py-2 ml-1 bg-blue-600 text-white rounded hover:bg-blue-800 hover:cursor-pointer"
-                    id="searchBtn"
-                >
-                    Search
-                </button>
+                    <input
+                        id="searchText"
+                        type="text"
+                        placeholder="Search by name..."
+                        value={search}
+                        onChange={e => setSearch(e.target.value)}
+                        className="border rounded p-2 w-64"
+                    />
+                    <button
+                        onClick={() => {
+                            setQuery(search);
+                            setPage(1);
+                        }}
+                        className="px-4 py-2 ml-1 bg-blue-600 text-white rounded hover:bg-blue-800 hover:cursor-pointer"
+                        id="searchBtn"
+                    >
+                        Search
+                    </button>
                 </form>
             </div>
-            <div className={"font-bold mb-2"}>
-                <p >Selected Players: {selectedPlayers.length}/10</p>
+
+            <div className="font-bold mb-2">
+                <p>Selected Players: {selectedPlayers.length}/10</p>
+
+                <div className="mt-4 text-2xl">
+                    <h2 className="text-xl font-semibold">Team Rating</h2>
+                    <p>Team Score: {teamScore.toFixed(2)}</p>
+                    <p>Grade: <strong>{teamGrade}</strong></p>
+                </div>
             </div>
 
-            <table className="w-full text-sm border-collapse">
+            <table className="w-full text-sm border-collapse mt-4">
                 <thead className="bg-gray-100 text-left">
                 <tr>
                     <th className="p-2">Name</th>
@@ -105,7 +156,7 @@ export default function PlayerTable() {
                 </thead>
                 <tbody>
                 {players.map(player => (
-                    <tr key={player.id} className="border-t hover:bg-gray-50 ">
+                    <tr key={player.id} className="border-t hover:bg-gray-50">
                         <td className="p-2">{player.name}</td>
                         <td className="p-2">{player.team}</td>
                         <td className="p-2">{player.position}</td>
@@ -117,10 +168,12 @@ export default function PlayerTable() {
                         <td className="p-2">{player.total_blocks}</td>
                         <td className="p-2">{player.total_turnovers}</td>
                         <td className="p-2">
-                        <button onClick={ () => handleSelect(player)} className="px-4 py-2  bg-blue-600 h-[30px] text-white rounded flex items-center hover:bg-blue-800 hover:cursor-pointer">
-                            {isSelected(player.id) ? 'Deselect' : 'Select'}
-
-                        </button>
+                            <button
+                                onClick={() => handleSelect(player)}
+                                className="px-4 py-2 bg-blue-600 h-[30px] text-white rounded flex items-center hover:bg-blue-800 hover:cursor-pointer"
+                            >
+                                {isSelected(player.id) ? 'Deselect' : 'Select'}
+                            </button>
                         </td>
                     </tr>
                 ))}
