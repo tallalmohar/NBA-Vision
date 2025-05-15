@@ -21,6 +21,27 @@ export default function PlayerTable() {
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState('');
     const [query, setQuery] = useState('');
+    const [selectedPlayers, setSelectedPlayers] = useState<Player[]>([]);
+
+    const handleSelect = (player:any) => {
+        setSelectedPlayers((prev) => {
+            const alreadySelected = prev.find(p => p.id === player.id);
+            if (alreadySelected) {
+                return prev.filter(p => p.id !== player.id);
+            } else if (prev.length < 10) {
+                return [...prev, player];
+            } else {
+                alert("You can only select up to 10 players.");
+                return prev;
+            }
+        });
+    };
+    const isSelected = (id:any) => {
+        selectedPlayers.some(p => p.id === id)
+
+    };
+
+    //the function that does the math
 
     useEffect(() => {
         const url = query
@@ -62,6 +83,9 @@ export default function PlayerTable() {
                 </button>
                 </form>
             </div>
+            <div className={"font-bold mb-2"}>
+                <p >Selected Players: {selectedPlayers.length}/10</p>
+            </div>
 
             <table className="w-full text-sm border-collapse">
                 <thead className="bg-gray-100 text-left">
@@ -81,7 +105,7 @@ export default function PlayerTable() {
                 </thead>
                 <tbody>
                 {players.map(player => (
-                    <tr key={player.id} className="border-t hover:bg-gray-50">
+                    <tr key={player.id} className="border-t hover:bg-gray-50 ">
                         <td className="p-2">{player.name}</td>
                         <td className="p-2">{player.team}</td>
                         <td className="p-2">{player.position}</td>
@@ -93,8 +117,9 @@ export default function PlayerTable() {
                         <td className="p-2">{player.total_blocks}</td>
                         <td className="p-2">{player.total_turnovers}</td>
                         <td className="p-2">
-                        <button className="px-4 py-2  bg-blue-600 h-[30px] text-white rounded flex items-center hover:bg-blue-800 hover:cursor-pointer">
-                            Select
+                        <button onClick={ () => handleSelect(player)} className="px-4 py-2  bg-blue-600 h-[30px] text-white rounded flex items-center hover:bg-blue-800 hover:cursor-pointer">
+                            {isSelected(player.id) ? 'Deselect' : 'Select'}
+
                         </button>
                         </td>
                     </tr>
