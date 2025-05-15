@@ -55,7 +55,7 @@ export default function PlayerTable() {
                         setQuery(search);
                         setPage(1); // reset to page 1 when searching
                     }}
-                    className="px-4 py-2 ml-1 bg-blue-600 text-white rounded"
+                    className="px-4 py-2 ml-1 bg-blue-600 text-white rounded hover:bg-blue-800 hover:cursor-pointer"
                     id="searchBtn"
                 >
                     Search
@@ -76,6 +76,7 @@ export default function PlayerTable() {
                     <th className="p-2">Stl</th>
                     <th className="p-2">Blk</th>
                     <th className="p-2">TO</th>
+                    <th className="w-[90px]">Choose 10</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -91,6 +92,11 @@ export default function PlayerTable() {
                         <td className="p-2">{player.total_steals}</td>
                         <td className="p-2">{player.total_blocks}</td>
                         <td className="p-2">{player.total_turnovers}</td>
+                        <td className="p-2">
+                        <button className="px-4 py-2  bg-blue-600 h-[30px] text-white rounded flex items-center hover:bg-blue-800 hover:cursor-pointer">
+                            Select
+                        </button>
+                        </td>
                     </tr>
                 ))}
                 </tbody>
