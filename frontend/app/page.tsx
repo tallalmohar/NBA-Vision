@@ -2,6 +2,7 @@
 import Image from "next/image";
 import SidewayDiv from "@/app/components/SidewayDiv";
 import { Container } from 'react-bootstrap'
+import Link from "next/link";
 export default function Home() {
 
 
@@ -26,6 +27,9 @@ export default function Home() {
                             allowFullScreen></iframe>
                 </div>
                 </Container>
+            </div>
+            <div className={"flex justify-center mt-6"}>
+                <p className="text-[10px]">*No purchase necessary for the entire duration of the competition. You must be 18 years or older. Participation is only available to legal residents of Austria, Belgium, Czechia, Denmark, Finland, Germany, Greece, Hungary, Ireland, Italy, Netherlands, Norway, Portugal,<br/> Serbia, Spain, Switzerland, and the United Kingdom.<Link className="text-blue-700 underline" href="/about">Click here for full official rules</Link>.</p>
             </div>
         </main>
     );
