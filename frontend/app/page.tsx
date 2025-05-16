@@ -1,6 +1,7 @@
 'use client';
 import Image from "next/image";
 import SidewayDiv from "@/app/components/SidewayDiv";
+import { Container } from 'react-bootstrap'
 export default function Home() {
 
 
@@ -17,8 +18,14 @@ export default function Home() {
                 <SidewayDiv title="SIGN AND DROP PLAYERS" paragraph="Sign and waive players through the season to improve your team. " noleftBorder={false}/>
             </div>
 
-            <div className={"flex justify-center mt-20"}>
+            <div className={" flex flex-col justify-center items-center mt-20"}>
                 <h1 className="text-4xl font-bold">HOW TO PLAY</h1>
+                <Container>
+                <div className="mt-10">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/z3ZBZ_43oIE?si=pl6weGD66BDhnnRc" title="YouTube video"
+                            allowFullScreen></iframe>
+                </div>
+                </Container>
             </div>
         </main>
     );
